@@ -95,9 +95,9 @@
               <!-- do not use reporting of JMeter plugin. -->
               <enableReports>false</enableReports>
               <!-- configure which .jmx files to use -->
-              <jmeterTestFiles>
-                <jmeterTestFile>generic.jmx</jmeterTestFile>
-              </jmeterTestFiles>
+              <jMeterTestFiles>
+                <jMeterTestFile>generic.jmx</jMeterTestFile>
+              </jMeterTestFiles>
               <!-- server and port of tested webapp -->
               <jmeterUserProperties>
                 <server>${webapp.host}</server>
