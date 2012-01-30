@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+  <modelVersion>4.0.0</modelVersion>
+
+  <artifactId>jmeter-maven-plugin-example</artifactId>
+  <groupId>com.lazerycode.jmeter</groupId>
+  <version>1.0-SNAPSHOT</version>
+  <packaging>pom</packaging>
+
+  <description>
+    Executes JMeter a test.
+
+    Invoke with "mvn install -Dexecute"
+  </description>
+
+  <properties>
+    <webapp.protocol>http</webapp.protocol>
+    <webapp.host>www.mozilla.com</webapp.host>
+    <webapp.port>80</webapp.port>
+    <webapp.context></webapp.context>
+    <webapp.baseuri>${webapp.protocol}://${webapp.host}:${webapp.port}${webapp.context}</webapp.baseuri>
+    <jmeter.version>2.6-SNAPSHOT</jmeter.version>
+  </properties>
+
+  <profiles>
+
+    <profile>
+      <id>execute</id>
+      <activation>
+        <property>
+          <name>execute</name>
+        </property>
+      </activation>
+
+      <build>
+
+        <plugins>
+
+          <!-- execute JMeter test -->
+          <plugin>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>jmeter-maven-plugin</artifactId>
+            <version>1.4-SNAPSHOT</version>
+            <!-- configure different executions of the plugin  -->
+            <executions>
+              <execution>
+                <!--
+                  first test run warms up the webserver.
+                  Used to fill caches.
+                  With a different set of properties since it runs much shorter than a normal test
+                  and also the rate of requests/second may be much lower.
+                  Maybe also use a different URL set.
+                -->
+                <id>warmup</id>
+                <phase>integration-test</phase>
+                <goals>
+                  <goal>jmeter</goal>
+                </goals>
+                <configuration>
+                  <!-- this properties file configures the test.jmx above. -->
+                  <jmeterCustomPropertiesFile>${project.basedir}/src/test/jmeter/test-warmup.properties</jmeterCustomPropertiesFile>
+                  <jmeterUserProperties>
+                    <!-- use uris from given file -->
+                    <threadgroup00.dataFile>${project.basedir}/src/test/jmeter/urls.txt</threadgroup00.dataFile>
+                  </jmeterUserProperties>
+                  <!-- write JMeter results to this file. -->
+                  <resultsFileName>${project.build.directory}/warmup-results.xml</resultsFileName>
+                </configuration>
+              </execution>
+              <execution>
+                <!--
+                  first test run warms up the webserver. Used to fill caches
+                -->
+                <id>test</id>
+                <phase>integration-test</phase>
+                <goals>
+                  <goal>jmeter</goal>
+                </goals>
+                <configuration>
+                  <!-- this properties file configures the test.jmx above. -->
+                  <jmeterCustomPropertiesFile>${project.basedir}/src/test/jmeter/test.properties</jmeterCustomPropertiesFile>
+                  <jmeterUserProperties>
+                    <!-- use uris from given file -->
+                    <threadgroup00.dataFile>${project.basedir}/src/test/jmeter/urls.txt</threadgroup00.dataFile>
+                  </jmeterUserProperties>
+                  <!-- write JMeter results to this file. -->
+                  <resultsFileName>${project.build.directory}/test-results.xml</resultsFileName>
+                </configuration>
+              </execution>
+            </executions>
+            <configuration>
+              <!-- do not use reporting of JMeter plugin. -->
+              <enableReports>false</enableReports>
+              <!-- configure which .jmx files to use -->
+              <jmeterTestFiles>
+                <jmeterTestFile>generic.jmx</jmeterTestFile>
+              </jmeterTestFiles>
+              <!-- server and port of tested webapp -->
+              <jmeterUserProperties>
+                <server>${webapp.host}</server>
+                <port>${webapp.port}</port>
+              </jmeterUserProperties>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
+
+  <repositories>
+      <repository>
+          <id>Apache JMeter Repository</id>
+          <url>https://repository.apache.org/content/repositories/snapshots</url>
+      </repository>
+  </repositories>
+
+</project>
