@@ -76,8 +76,6 @@
                     <!-- use uris from given file -->
                     <threadgroup00.dataFile>${project.basedir}/src/test/jmeter/urls.txt</threadgroup00.dataFile>
                   </jmeterUserProperties>
-                  <!-- write JMeter results to this file. -->
-                  <resultsFileName>${project.build.directory}/warmup-results.xml</resultsFileName>
                 </configuration>
               </execution>
               <execution>
@@ -106,8 +104,6 @@
                     <!-- use uris from given file -->
                     <threadgroup00.dataFile>${project.basedir}/src/test/jmeter/urls.txt</threadgroup00.dataFile>
                   </jmeterUserProperties>
-                  <!-- write JMeter results to this file. -->
-                  <resultsFileName>${project.build.directory}/test-results.xml</resultsFileName>
                 </configuration>
               </execution>
             </executions>
