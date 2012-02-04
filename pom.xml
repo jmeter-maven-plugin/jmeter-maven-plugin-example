@@ -22,7 +22,6 @@
     <webapp.port>80</webapp.port>
     <webapp.context></webapp.context>
     <webapp.baseuri>${webapp.protocol}://${webapp.host}:${webapp.port}${webapp.context}</webapp.baseuri>
-    <jmeter.version>2.6-SNAPSHOT</jmeter.version>
   </properties>
 
   <profiles>
@@ -60,7 +59,7 @@
                   <goal>jmeter</goal>
                 </goals>
                 <configuration>
-                  <jmeterUserProperties>
+                  <propertiesUser>
                     <!--Accesses urls for warmup (compiles JSPs, fills caches, ...)-->
                     <threadgroup00.name>warmup</threadgroup00.name>
                     <!--number of threads to use-->
@@ -75,7 +74,11 @@
                     <threadgroup00.throughput>100000000</threadgroup00.throughput>
                     <!-- use uris from given file -->
                     <threadgroup00.dataFile>${project.basedir}/src/test/jmeter/urls.txt</threadgroup00.dataFile>
-                  </jmeterUserProperties>
+                  </propertiesUser>
+                  <propertiesSystem>
+                    <key>value</key>
+                    <user.dir>should.not.be.set</user.dir>
+                  </propertiesSystem>
                 </configuration>
               </execution>
               <execution>
@@ -88,7 +91,7 @@
                   <goal>jmeter</goal>
                 </goals>
                 <configuration>
-                  <jmeterUserProperties>
+                  <propertiesUser>
                     <!--A user which accesses all URLs-->
                     <threadgroup00.name>test</threadgroup00.name>
                     <!--number of threads to use-->
@@ -103,7 +106,7 @@
                     <threadgroup00.throughput>100000000</threadgroup00.throughput>
                     <!-- use uris from given file -->
                     <threadgroup00.dataFile>${project.basedir}/src/test/jmeter/urls.txt</threadgroup00.dataFile>
-                  </jmeterUserProperties>
+                  </propertiesUser>
                 </configuration>
               </execution>
             </executions>
@@ -115,10 +118,10 @@
                 <jMeterTestFile>generic.jmx</jMeterTestFile>
               </jMeterTestFiles>
               <!-- server and port of tested webapp -->
-              <jmeterUserProperties>
+              <propertiesUser>
                 <server>${webapp.host}</server>
                 <port>${webapp.port}</port>
-              </jmeterUserProperties>
+              </propertiesUser>
             </configuration>
           </plugin>
         </plugins>

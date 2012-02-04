@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-  Multi purpose JMeter configuration file which can be "instantiated" by a concrete property file
+  Multi purpose JMeter configuration file
 
 -->
 <jmeterTestPlan version="1.2" properties="2.1">
