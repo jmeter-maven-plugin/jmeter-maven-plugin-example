@@ -111,12 +111,14 @@
               </execution>
             </executions>
             <configuration>
-              <!-- do not use reporting of JMeter plugin. -->
-              <enableReports>false</enableReports>
+              <!-- disable built-in reports -->
+              <reportConfig>
+                <enable>false</enable>
+              </reportConfig>
               <!-- configure which .jmx files to use -->
-              <jMeterTestFiles>
-                <jMeterTestFile>generic.jmx</jMeterTestFile>
-              </jMeterTestFiles>
+              <testFilesIncluded>
+                <testFilesIncluded>generic.jmx</testFilesIncluded>
+              </testFilesIncluded>
               <!-- server and port of tested webapp -->
               <propertiesUser>
                 <server>${webapp.host}</server>
