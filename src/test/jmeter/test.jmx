@@ -90,6 +90,7 @@
         <stringProp name="ThreadGroup.delay">${__P(threadgroup00.scheduledDelay,0)}</stringProp>
       </ThreadGroup>
       <hashTree>
+        <!-- dataFile is passed to a CSVDataSet. The delimiter is configured as ";", but a line break also works and makes the dataFile easier to read. -->
         <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="RequestPath" enabled="true">
           <stringProp name="delimiter">;</stringProp>
           <stringProp name="fileEncoding"></stringProp>
@@ -108,7 +109,7 @@
           <stringProp name="TestPlan.comments">per ThreadGroup</stringProp>
         </ConstantThroughputTimer>
         <hashTree/>
-        <HTTPSampler2 guiclass="HttpTestSampleGui" testclass="HTTPSampler2" testname="${requestPath}"
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="${requestPath}"
                enabled="true">
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel"
                  testclass="Arguments" testname="User defined variables" enabled="true">
@@ -116,7 +117,9 @@
           </elementProp>
           <stringProp name="HTTPSampler.domain">${server}</stringProp>
           <stringProp name="HTTPSampler.port">${port}</stringProp>
+          <!-- default: 10 seconds -->
           <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <!-- default: 10 seconds -->
           <stringProp name="HTTPSampler.response_timeout"></stringProp>
           <stringProp name="HTTPSampler.protocol">${protocol}</stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
@@ -126,12 +129,12 @@
           <boolProp name="HTTPSampler.auto_redirects">true</boolProp>
           <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
           <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
-          <stringProp name="HTTPSampler.FILE_NAME"></stringProp>
-          <stringProp name="HTTPSampler.FILE_FIELD"></stringProp>
-          <stringProp name="HTTPSampler.mimetype"></stringProp>
+          <stringProp name="HTTPSampler.implementation">HttpClient4</stringProp>
+          <!-- do not download embedded resources -->
+          <boolProp name="HTTPSampler.image_parser">false</boolProp>
           <boolProp name="HTTPSampler.monitor">false</boolProp>
           <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
-        </HTTPSampler2>
+        </HTTPSamplerProxy>
       </hashTree>
 
       <!--
@@ -156,6 +159,7 @@
         <stringProp name="ThreadGroup.delay">${__P(threadgroup01.scheduledDelay,0)}</stringProp>
       </ThreadGroup>
       <hashTree>
+        <!-- dataFile is passed to a CSVDataSet. The delimiter is configured as ";", but a line break also works and makes the dataFile easier to read. -->
         <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="RequestPath" enabled="true">
           <stringProp name="delimiter">;</stringProp>
           <stringProp name="fileEncoding"></stringProp>
@@ -174,7 +178,7 @@
           <stringProp name="TestPlan.comments">per ThreadGroup</stringProp>
         </ConstantThroughputTimer>
         <hashTree/>
-        <HTTPSampler2 guiclass="HttpTestSampleGui" testclass="HTTPSampler2" testname="${requestPath}"
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="${requestPath}"
                enabled="true">
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel"
                  testclass="Arguments" testname="User defined variables" enabled="true">
@@ -182,7 +186,9 @@
           </elementProp>
           <stringProp name="HTTPSampler.domain">${server}</stringProp>
           <stringProp name="HTTPSampler.port">${port}</stringProp>
+          <!-- default: 10 seconds -->
           <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <!-- default: 10 seconds -->
           <stringProp name="HTTPSampler.response_timeout"></stringProp>
           <stringProp name="HTTPSampler.protocol">${protocol}</stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
@@ -192,12 +198,12 @@
           <boolProp name="HTTPSampler.auto_redirects">true</boolProp>
           <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
           <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
-          <stringProp name="HTTPSampler.FILE_NAME"></stringProp>
-          <stringProp name="HTTPSampler.FILE_FIELD"></stringProp>
-          <stringProp name="HTTPSampler.mimetype"></stringProp>
+          <stringProp name="HTTPSampler.implementation">HttpClient4</stringProp>
+          <!-- do not download embedded resources -->
+          <boolProp name="HTTPSampler.image_parser">false</boolProp>
           <boolProp name="HTTPSampler.monitor">false</boolProp>
           <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
-        </HTTPSampler2>
+        </HTTPSamplerProxy>
       </hashTree>
 
       <!--
@@ -222,6 +228,7 @@
         <stringProp name="ThreadGroup.delay">${__P(threadgroup02.scheduledDelay,0)}</stringProp>
       </ThreadGroup>
       <hashTree>
+        <!-- dataFile is passed to a CSVDataSet. The delimiter is configured as ";", but a line break also works and makes the dataFile easier to read. -->
         <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="RequestPath" enabled="true">
           <stringProp name="delimiter">;</stringProp>
           <stringProp name="fileEncoding"></stringProp>
@@ -240,7 +247,7 @@
           <stringProp name="TestPlan.comments">per ThreadGroup</stringProp>
         </ConstantThroughputTimer>
         <hashTree/>
-        <HTTPSampler2 guiclass="HttpTestSampleGui" testclass="HTTPSampler2" testname="${requestPath}"
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="${requestPath}"
                enabled="true">
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel"
                  testclass="Arguments" testname="User defined variables" enabled="true">
@@ -248,7 +255,9 @@
           </elementProp>
           <stringProp name="HTTPSampler.domain">${server}</stringProp>
           <stringProp name="HTTPSampler.port">${port}</stringProp>
+          <!-- default: 10 seconds -->
           <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <!-- default: 10 seconds -->
           <stringProp name="HTTPSampler.response_timeout"></stringProp>
           <stringProp name="HTTPSampler.protocol">${protocol}</stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
@@ -258,12 +267,12 @@
           <boolProp name="HTTPSampler.auto_redirects">true</boolProp>
           <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
           <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
-          <stringProp name="HTTPSampler.FILE_NAME"></stringProp>
-          <stringProp name="HTTPSampler.FILE_FIELD"></stringProp>
-          <stringProp name="HTTPSampler.mimetype"></stringProp>
+          <stringProp name="HTTPSampler.implementation">HttpClient4</stringProp>
+          <!-- do not download embedded resources -->
+          <boolProp name="HTTPSampler.image_parser">false</boolProp>
           <boolProp name="HTTPSampler.monitor">false</boolProp>
           <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
-        </HTTPSampler2>
+        </HTTPSamplerProxy>
       </hashTree>
 
       <!--
@@ -288,6 +297,7 @@
         <stringProp name="ThreadGroup.delay">${__P(threadgroup03.scheduledDelay,0)}</stringProp>
       </ThreadGroup>
       <hashTree>
+        <!-- dataFile is passed to a CSVDataSet. The delimiter is configured as ";", but a line break also works and makes the dataFile easier to read. -->
         <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="RequestPath" enabled="true">
           <stringProp name="delimiter">;</stringProp>
           <stringProp name="fileEncoding"></stringProp>
@@ -306,7 +316,7 @@
           <stringProp name="TestPlan.comments">per ThreadGroup</stringProp>
         </ConstantThroughputTimer>
         <hashTree/>
-        <HTTPSampler2 guiclass="HttpTestSampleGui" testclass="HTTPSampler2" testname="${requestPath}"
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="${requestPath}"
                enabled="true">
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel"
                  testclass="Arguments" testname="User defined variables" enabled="true">
@@ -314,7 +324,9 @@
           </elementProp>
           <stringProp name="HTTPSampler.domain">${server}</stringProp>
           <stringProp name="HTTPSampler.port">${port}</stringProp>
+          <!-- default: 10 seconds -->
           <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <!-- default: 10 seconds -->
           <stringProp name="HTTPSampler.response_timeout"></stringProp>
           <stringProp name="HTTPSampler.protocol">${protocol}</stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
@@ -324,12 +336,12 @@
           <boolProp name="HTTPSampler.auto_redirects">true</boolProp>
           <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
           <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
-          <stringProp name="HTTPSampler.FILE_NAME"></stringProp>
-          <stringProp name="HTTPSampler.FILE_FIELD"></stringProp>
-          <stringProp name="HTTPSampler.mimetype"></stringProp>
+          <stringProp name="HTTPSampler.implementation">HttpClient4</stringProp>
+          <!-- do not download embedded resources -->
+          <boolProp name="HTTPSampler.image_parser">false</boolProp>
           <boolProp name="HTTPSampler.monitor">false</boolProp>
           <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
-        </HTTPSampler2>
+        </HTTPSamplerProxy>
       </hashTree>
 
 
