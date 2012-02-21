@@ -124,11 +124,4 @@
     </profile>
   </profiles>
 
-  <repositories>
-      <repository>
-          <id>Apache JMeter Repository</id>
-          <url>https://repository.apache.org/content/repositories/releases/</url>
-      </repository>
-  </repositories>
-
 </project>
