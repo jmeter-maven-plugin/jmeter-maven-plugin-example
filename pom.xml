@@ -11,7 +11,7 @@
   <packaging>pom</packaging>
 
   <description>
-    Executes JMeter a test.
+    Executes a JMeter test.
 
     Invoke with "mvn verify -Pperformance"
   </description>
@@ -107,11 +107,13 @@
               <reportConfig>
                 <enable>false</enable>
               </reportConfig>
-              <!-- configure which .jmx files to use -->
+
+              <!-- configure which testplans to use -->
               <testFilesIncluded>
-                <testFilesIncluded>generic.jmx</testFilesIncluded>
+                <testFilesIncluded>test.jmx</testFilesIncluded>
               </testFilesIncluded>
-              <!-- server and port of tested webapp -->
+
+              <!-- protocol, server and port of tested webapp -->
               <propertiesUser>
                 <protocol>${webapp.protocol}</protocol>
                 <server>${webapp.host}</server>

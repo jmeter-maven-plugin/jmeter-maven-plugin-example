@@ -9,7 +9,7 @@ with different configurations, for example a "warmup" and a "real" test.
 Usage
 --------
 
-Execute `mvn install -Dexecute`
+Execute `mvn verify -Pperformance`
 
 Website
 --------
