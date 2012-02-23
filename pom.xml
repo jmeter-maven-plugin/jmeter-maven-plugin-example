@@ -102,10 +102,13 @@
                 </configuration>
               </execution>
             </executions>
+
+            <!-- general configuration for all executions -->
+
             <configuration>
-              <!-- disable built-in reports -->
+              <!-- enable built-in reports -->
               <reportConfig>
-                <enable>false</enable>
+                <enable>true</enable>
               </reportConfig>
 
               <!-- configure which testplans to use -->
