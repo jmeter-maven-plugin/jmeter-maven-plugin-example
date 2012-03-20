@@ -7,6 +7,8 @@ with different configurations, for example a "warmup" and a "real" test.
 
 Included is a JMeter Testplan `test.jmx` that supports 4 distinct threadgroups which can be configured individually.
 
+Look at the included files for further information, the `pom.xml` is fully commented, and the JMeter Testplan `test.jmx` as well.
+
 ## Usage ##
 
   * Execute `mvn verify -Pperformance`
