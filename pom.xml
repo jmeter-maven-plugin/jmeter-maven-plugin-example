@@ -20,7 +20,7 @@
     <webapp.protocol>http</webapp.protocol>
     <webapp.host>www.mozilla.com</webapp.host>
     <webapp.port>80</webapp.port>
-    <webapp.uris>${project.basedir}/src/test/jmeter/urls.txt</webapp.uris>
+    <webapp.uris>${project.basedir}/src/test/uris/uris.txt</webapp.uris>
   </properties>
 
   <profiles>
@@ -36,7 +36,7 @@
           <plugin>
             <groupId>${project.groupId}</groupId>
             <artifactId>jmeter-maven-plugin</artifactId>
-            <version>1.4.1</version>
+            <version>1.4.2-SNAPSHOT</version>
             <!-- configure different executions of the plugin  -->
             <executions>
               <execution>
@@ -106,9 +106,9 @@
             <!-- general configuration for all executions -->
 
             <configuration>
-              <!-- enable built-in reports -->
+              <!-- disable built-in reports -->
               <reportConfig>
-                <enable>true</enable>
+                <enable>false</enable>
               </reportConfig>
 
               <!-- configure which testplans to use -->
