@@ -77,8 +77,9 @@
              enabled="true">
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel"
                testclass="LoopController" testname="Loop Controller" enabled="true">
-          <boolProp name="LoopController.continue_forever">true</boolProp>
-          <stringProp name="LoopController.loops">-1</stringProp>
+          <boolProp name="LoopController.continue_forever">false</boolProp>
+          <!-- use numberOfLoops with scheduledDuration set to a high value if you want the test to end after a fixed amout of loops. -1 is disabled -->
+          <stringProp name="LoopController.loops">${__P(threadgroup00.numberOfLoops,-1)}</stringProp>
         </elementProp>
         <stringProp name="ThreadGroup.num_threads">${__P(threadgroup00.numberOfThreads,0)}</stringProp>
         <stringProp name="ThreadGroup.ramp_time">${__P(threadgroup00.rampUp,1)}</stringProp>
@@ -146,8 +147,9 @@
              enabled="true">
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel"
                testclass="LoopController" testname="Loop Controller" enabled="true">
-          <boolProp name="LoopController.continue_forever">true</boolProp>
-          <stringProp name="LoopController.loops">-1</stringProp>
+          <boolProp name="LoopController.continue_forever">false</boolProp>
+          <!-- use numberOfLoops with scheduledDuration set to a high value if you want the test to end after a fixed amout of loops. -1 is disabled -->
+          <stringProp name="LoopController.loops">${__P(threadgroup01.numberOfLoops,-1)}</stringProp>
         </elementProp>
         <stringProp name="ThreadGroup.num_threads">${__P(threadgroup01.numberOfThreads,0)}</stringProp>
         <stringProp name="ThreadGroup.ramp_time">${__P(threadgroup01.rampUp,1)}</stringProp>
@@ -215,8 +217,9 @@
              enabled="true">
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel"
                testclass="LoopController" testname="Loop Controller" enabled="true">
-          <boolProp name="LoopController.continue_forever">true</boolProp>
-          <stringProp name="LoopController.loops">-1</stringProp>
+          <boolProp name="LoopController.continue_forever">false</boolProp>
+          <!-- use numberOfLoops with scheduledDuration set to a high value if you want the test to end after a fixed amout of loops. -1 is disabled -->
+          <stringProp name="LoopController.loops">${__P(threadgroup02.numberOfLoops,-1)}</stringProp>
         </elementProp>
         <stringProp name="ThreadGroup.num_threads">${__P(threadgroup02.numberOfThreads,0)}</stringProp>
         <stringProp name="ThreadGroup.ramp_time">${__P(threadgroup02.rampUp,1)}</stringProp>
@@ -284,8 +287,9 @@
              enabled="true">
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel"
                testclass="LoopController" testname="Loop Controller" enabled="true">
-          <boolProp name="LoopController.continue_forever">true</boolProp>
-          <stringProp name="LoopController.loops">-1</stringProp>
+          <boolProp name="LoopController.continue_forever">false</boolProp>
+          <!-- use numberOfLoops with scheduledDuration set to a high value if you want the test to end after a fixed amout of loops. -1 is disabled -->
+          <stringProp name="LoopController.loops">${__P(threadgroup03.numberOfLoops,-1)}</stringProp>
         </elementProp>
         <stringProp name="ThreadGroup.num_threads">${__P(threadgroup03.numberOfThreads,0)}</stringProp>
         <stringProp name="ThreadGroup.ramp_time">${__P(threadgroup03.rampUp,1)}</stringProp>
