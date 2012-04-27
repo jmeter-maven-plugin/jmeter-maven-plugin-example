@@ -129,4 +129,12 @@
     </profile>
   </profiles>
 
+  <!-- in case we want to use a SNAPSHOT version of the jmeter-maven-plugin -->
+  <pluginRepositories>
+    <pluginRepository>
+      <id>sonatype-snapshots</id>
+      <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+    </pluginRepository>
+  </pluginRepositories>
+
 </project>
