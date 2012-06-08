@@ -7,7 +7,7 @@
 
   <artifactId>jmeter-maven-plugin-example</artifactId>
   <groupId>com.lazerycode.jmeter</groupId>
-  <version>1.5.1-SNAPSHOT</version>
+  <version>1.6.0-SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <description>
@@ -107,11 +107,6 @@
             <!-- general configuration for all executions -->
 
             <configuration>
-              <!-- disable built-in reports -->
-              <reportConfig>
-                <enable>false</enable>
-              </reportConfig>
-
               <!-- configure which testplans to use -->
               <testFilesIncluded>
                 <testFilesIncluded>test.jmx</testFilesIncluded>
@@ -140,7 +135,7 @@
                   <!--
                   source file that contains jmeter result data. Needs to be XML format or a GZIPed XML format
                   -->
-                  <source>${project.build.directory}/jmeter/report/*</source>
+                  <source>${project.build.directory}/jmeter/results/*</source>
 
                   <!--
                   directory where to store analysis report files. At least a file "summary.txt" will be stored here.
