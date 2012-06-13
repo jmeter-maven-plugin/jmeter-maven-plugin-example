@@ -24,9 +24,14 @@ You could use a website crawler/broken link checker to generate a URL list for y
  * Windows/Linux (using Wine): [Xenu's link sleuth][3]
  * Mac OSX: [Integrity][4]
 
+Credits
+--------------
 
+Part of the development of this workspace is sponsored by [CoreMedia][5]
 
 [1]:    http://jmeter.lazerycode.com                                "JMeter Maven Plugin"
 [2]:    http://jakarta.apache.org/jmeter/                           "JMeter"
 [3]:    http://home.snafu.de/tilman/xenulink.html                   "Xenu's link sleuth"
 [4]:    http://peacockmedia.co.uk/integrity/                        "Integrity"
+[5]:    http://www.coremedia.com                                    "CoreMedia AG"
+
