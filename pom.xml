@@ -7,7 +7,7 @@
 
   <artifactId>jmeter-maven-plugin-example</artifactId>
   <groupId>com.lazerycode.jmeter</groupId>
-  <version>1.6.0-SNAPSHOT</version>
+  <version>1.6.0</version>
   <packaging>pom</packaging>
 
   <description>
@@ -21,7 +21,7 @@
     <webapp.host>www.mozilla.com</webapp.host>
     <webapp.port>80</webapp.port>
     <webapp.uris>${project.basedir}/src/test/uris/uris.txt</webapp.uris>
-    <jmeter.analysis.maven.plugin.version>1.0-SNAPSHOT</jmeter.analysis.maven.plugin.version>
+    <jmeter.analysis.maven.plugin.version>1.0.0</jmeter.analysis.maven.plugin.version>
   </properties>
 
   <profiles>
