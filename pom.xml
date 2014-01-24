@@ -7,7 +7,7 @@
 
   <artifactId>jmeter-maven-plugin-example</artifactId>
   <groupId>com.lazerycode.jmeter</groupId>
-  <version>1.6.0</version>
+  <version>1.9.0</version>
   <packaging>pom</packaging>
 
   <description>
@@ -21,7 +21,9 @@
     <webapp.host>www.mozilla.com</webapp.host>
     <webapp.port>80</webapp.port>
     <webapp.uris>${project.basedir}/src/test/uris/uris.txt</webapp.uris>
-    <jmeter.analysis.maven.plugin.version>1.0.0</jmeter.analysis.maven.plugin.version>
+    <jmeter.analysis.maven.plugin.version>1.0.4</jmeter.analysis.maven.plugin.version>
+    <test.duration>30</test.duration>
+    <test.threads>10</test.threads>
   </properties>
 
   <profiles>
@@ -63,7 +65,7 @@
                     <!--delay of the test in seconds-->
                     <threadgroup00.scheduledDelay>0</threadgroup00.scheduledDelay>
                     <!--duration of the test in seconds-->
-                    <threadgroup00.scheduledDuration>30</threadgroup00.scheduledDuration>
+                    <threadgroup00.scheduledDuration>60</threadgroup00.scheduledDuration>
                     <!--how long till all threads are up and running in seconds-->
                     <threadgroup00.rampUp>1</threadgroup00.rampUp>
                     <!--target throughput of all threads of the group per minute-->
@@ -88,11 +90,11 @@
                     <!--A user which accesses all URLs-->
                     <threadgroup00.name>test</threadgroup00.name>
                     <!--number of threads to use-->
-                    <threadgroup00.numberOfThreads>10</threadgroup00.numberOfThreads>
+                    <threadgroup00.numberOfThreads>${test.threads}</threadgroup00.numberOfThreads>
                     <!--delay of the test in seconds-->
                     <threadgroup00.scheduledDelay>0</threadgroup00.scheduledDelay>
                     <!--duration of the test in seconds-->
-                    <threadgroup00.scheduledDuration>30</threadgroup00.scheduledDuration>
+                    <threadgroup00.scheduledDuration>${test.duration}</threadgroup00.scheduledDuration>
                     <!--how long till all threads are up and running in seconds-->
                     <threadgroup00.rampUp>1</threadgroup00.rampUp>
                     <!--target throughput of all threads of the group per minute-->
@@ -118,6 +120,7 @@
                 <server>${webapp.host}</server>
                 <port>${webapp.port}</port>
               </propertiesUser>
+              <ignoreResultFailures>true</ignoreResultFailures>
             </configuration>
           </plugin>
 
@@ -150,17 +153,6 @@
                   <!--<requestGroups>-->
                     <!--<test>/en-US/firefox/**</test>-->
                   <!--</requestGroups>-->
-
-                  <!--
-                  If set to true, additional files "<category>-sizes.csv" and "<category>-durations.csv" will be stored.
-                  These files contain detailed information for response size and response durations for every URI.
-                  -->
-                  <generateCSVs>true</generateCSVs>
-
-                  <!--
-                  If set to true, additional chart files "<category>-durations.png" will be created.
-                  -->
-                  <generateCharts>true</generateCharts>
 
                   <!--
                   Mapping from resource URL to file name. Every resource will be downloaded and stored in 'targetDirectory'
