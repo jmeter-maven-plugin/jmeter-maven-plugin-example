@@ -35,3 +35,7 @@ Part of the development of this workspace is sponsored by [CoreMedia][5]
 [4]:    http://peacockmedia.co.uk/integrity/                        "Integrity"
 [5]:    http://www.coremedia.com                                    "CoreMedia AG"
 
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/afranken/jmeter-maven-plugin-example/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
