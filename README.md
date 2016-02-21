@@ -1,5 +1,7 @@
 # Overview #
 
+[![Join the chat at https://gitter.im/jmeter-maven-plugin/jmeter-maven-plugin-example](https://badges.gitter.im/jmeter-maven-plugin/jmeter-maven-plugin-example.svg)](https://gitter.im/jmeter-maven-plugin/jmeter-maven-plugin-example?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 This is an example project for running a [JMeter][1] test with the [JMeter Maven Plugin][2] and the [JMeter Analysis Maven Plugin][2] out of the box.
 
 It runs a [JMeter][1] test against a few URLs on www.mozilla.com and illustrates how the maven plugin can be used to run
