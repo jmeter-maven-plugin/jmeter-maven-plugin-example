@@ -1,6 +1,7 @@
 # JMeter Maven Plugin Example #
 
 [![Join the chat at https://gitter.im/jmeter-maven-plugin/jmeter-maven-plugin](https://badges.gitter.im/jmeter-maven-plugin/jmeter-maven-plugin.svg)](https://gitter.im/jmeter-maven-plugin/jmeter-maven-plugin?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Build Status](https://travis-ci.org/jmeter-maven-plugin/jmeter-maven-plugin-example.svg?branch=master)](https://travis-ci.org/jmeter-maven-plugin/jmeter-maven-plugin-example)
 
 ## Overview ##
 
