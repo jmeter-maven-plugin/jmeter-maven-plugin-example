@@ -1,4 +1,8 @@
-# Overview #
+# JMeter Maven Plugin Example #
+
+[![Join the chat at https://gitter.im/jmeter-maven-plugin/jmeter-maven-plugin](https://badges.gitter.im/jmeter-maven-plugin/jmeter-maven-plugin.svg)](https://gitter.im/jmeter-maven-plugin/jmeter-maven-plugin?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
+## Overview ##
 
 This is an example project for running a [JMeter][1] test with the [JMeter Maven Plugin][2] and the [JMeter Analysis Maven Plugin][2] out of the box.
 
