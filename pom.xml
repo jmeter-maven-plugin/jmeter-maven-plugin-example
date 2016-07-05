@@ -3,185 +3,135 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
-  <modelVersion>4.0.0</modelVersion>
+    <modelVersion>4.0.0</modelVersion>
 
-  <artifactId>jmeter-maven-plugin-example</artifactId>
-  <groupId>com.lazerycode.jmeter</groupId>
-  <version>1.10.0</version>
-  <packaging>pom</packaging>
+    <artifactId>jmeter-maven-plugin-example</artifactId>
+    <groupId>com.lazerycode.jmeter</groupId>
+    <version>DEV-SNAPSHOT</version>
+    <packaging>pom</packaging>
 
-  <description>
-    Executes a JMeter test.
+    <description>
+        Executes a JMeter test.
 
-    Invoke with "mvn verify -Pperformance"
-  </description>
+        Invoke with "mvn verify -Pperformance"
+    </description>
 
-  <properties>
-    <webapp.protocol>http</webapp.protocol>
-    <webapp.host>www.mozilla.com</webapp.host>
-    <webapp.port>80</webapp.port>
-    <webapp.uris>${project.basedir}/src/test/uris/uris.txt</webapp.uris>
-    <jmeter.analysis.maven.plugin.version>1.0.4</jmeter.analysis.maven.plugin.version>
-    <test.duration>30</test.duration>
-    <test.threads>10</test.threads>
-  </properties>
+    <properties>
+        <webapp.protocol>http</webapp.protocol>
+        <webapp.host>www.mozilla.com</webapp.host>
+        <webapp.port>80</webapp.port>
+        <webapp.uris>${project.basedir}/src/test/uris/uris.txt</webapp.uris>
+        <jmeter.analysis.maven.plugin.version>1.0.6</jmeter.analysis.maven.plugin.version>
+        <jmeter-maven-plugin.version>2.0.1</jmeter-maven-plugin.version>
+        <test.duration>30</test.duration>
+        <test.threads>10</test.threads>
+    </properties>
 
-  <profiles>
+    <profiles>
 
-    <profile>
-      <id>performance</id>
+        <profile>
+            <id>performance</id>
+            <build>
+                <plugins>
+                    <!-- execute JMeter test -->
+                    <plugin>
+                        <groupId>${project.groupId}</groupId>
+                        <artifactId>jmeter-maven-plugin</artifactId>
+                        <version>${jmeter-maven-plugin.version}</version>
+                        <executions>
+                            <execution>
+                                <id>test</id>
+                                <goals>
+                                    <goal>jmeter</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <!-- configure which testplans to use -->
+                            <testFilesIncluded>
+                                <testFilesIncluded>test.jmx</testFilesIncluded>
+                            </testFilesIncluded>
+                            <ignoreResultFailures>true</ignoreResultFailures>
+                            <propertiesUser>
+                                <!--A user which accesses all URLs-->
+                                <threadgroup00.name>test</threadgroup00.name>
+                                <!--number of threads to use-->
+                                <threadgroup00.numberOfThreads>${test.threads}</threadgroup00.numberOfThreads>
+                                <!--delay of the test in seconds-->
+                                <threadgroup00.scheduledDelay>0</threadgroup00.scheduledDelay>
+                                <!--duration of the test in seconds-->
+                                <threadgroup00.scheduledDuration>${test.duration}</threadgroup00.scheduledDuration>
+                                <!--how long till all threads are up and running in seconds-->
+                                <threadgroup00.rampUp>1</threadgroup00.rampUp>
+                                <!--target throughput of all threads of the group per minute-->
+                                <threadgroup00.throughput>100000000</threadgroup00.throughput>
+                                <!-- use uris from given file -->
+                                <threadgroup00.dataFile>${webapp.uris}</threadgroup00.dataFile>
+                                <protocol>${webapp.protocol}</protocol>
+                                <server>${webapp.host}</server>
+                                <port>${webapp.port}</port>
+                            </propertiesUser>
+                        </configuration>
+                    </plugin>
 
-      <build>
+                    <plugin>
+                        <groupId>${project.groupId}</groupId>
+                        <artifactId>jmeter-analysis-maven-plugin</artifactId>
+                        <version>${jmeter.analysis.maven.plugin.version}</version>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>analyze</goal>
+                                </goals>
+                                <phase>post-integration-test</phase>
+                                <configuration>
+                                    <!--
+                                    source file that contains jmeter result data. Needs to be XML format or a GZIPed XML format
+                                    -->
+                                    <source>${project.build.directory}/jmeter/results/*</source>
 
-        <plugins>
+                                    <!--
+                                    directory where to store analysis report files. At least a file "summary.txt" will be stored here.
+                                    -->
+                                    <targetDirectory>${project.build.directory}/reports</targetDirectory>
 
-          <!-- execute JMeter test -->
-          <plugin>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>jmeter-maven-plugin</artifactId>
-            <version>${project.version}</version>
-            <!-- configure different executions of the plugin  -->
-            <executions>
-              <execution>
-                <!--
-                1)
-                  first test run warms up the webserver.
-                  Used to fill caches.
-                  With a different set of properties since it runs much shorter than a normal test
-                  and also the rate of requests/second may be much lower.
-                  Maybe also use a different URL set.
-                -->
-                <id>warmup</id>
-                <phase>integration-test</phase>
-                <goals>
-                  <goal>jmeter</goal>
-                </goals>
-                <configuration>
-                  <propertiesUser>
-                    <!--Accesses urls for warmup (compiles JSPs, fills caches, ...)-->
-                    <threadgroup00.name>warmup</threadgroup00.name>
-                    <!--number of threads to use-->
-                    <threadgroup00.numberOfThreads>1</threadgroup00.numberOfThreads>
-                    <!--delay of the test in seconds-->
-                    <threadgroup00.scheduledDelay>0</threadgroup00.scheduledDelay>
-                    <!--duration of the test in seconds-->
-                    <threadgroup00.scheduledDuration>60</threadgroup00.scheduledDuration>
-                    <!--how long till all threads are up and running in seconds-->
-                    <threadgroup00.rampUp>1</threadgroup00.rampUp>
-                    <!--target throughput of all threads of the group per minute-->
-                    <threadgroup00.throughput>100000000</threadgroup00.throughput>
-                    <!-- use uris from given file -->
-                    <threadgroup00.dataFile>${webapp.uris}</threadgroup00.dataFile>
-                  </propertiesUser>
-                </configuration>
-              </execution>
-              <execution>
+                                    <!--
+                                    Defines groups of requests by URL patterns,
+                                    e.g. URIs starting with /mock/page are associated with group "pages". All analysis results are
+                                    If there is no such mapping then the threadgroups from the jmeter.xml are used.
+                                    -->
+                                    <!--<requestGroups>-->
+                                    <!--<test>/en-US/firefox/**</test>-->
+                                    <!--</requestGroups>-->
 
-                <!--
-                  2) Performance test
-                -->
-                <id>test</id>
-                <phase>integration-test</phase>
-                <goals>
-                  <goal>jmeter</goal>
-                </goals>
-                <configuration>
-                  <propertiesUser>
-                    <!--A user which accesses all URLs-->
-                    <threadgroup00.name>test</threadgroup00.name>
-                    <!--number of threads to use-->
-                    <threadgroup00.numberOfThreads>${test.threads}</threadgroup00.numberOfThreads>
-                    <!--delay of the test in seconds-->
-                    <threadgroup00.scheduledDelay>0</threadgroup00.scheduledDelay>
-                    <!--duration of the test in seconds-->
-                    <threadgroup00.scheduledDuration>${test.duration}</threadgroup00.scheduledDuration>
-                    <!--how long till all threads are up and running in seconds-->
-                    <threadgroup00.rampUp>1</threadgroup00.rampUp>
-                    <!--target throughput of all threads of the group per minute-->
-                    <threadgroup00.throughput>100000000</threadgroup00.throughput>
-                    <!-- use uris from given file -->
-                    <threadgroup00.dataFile>${webapp.uris}</threadgroup00.dataFile>
-                  </propertiesUser>
-                </configuration>
-              </execution>
-            </executions>
+                                    <!--
+                                    Mapping from resource URL to file name. Every resource will be downloaded and stored in 'targetDirectory'
+                                    with the given filename. Tokens "_FROM_" and "_TO_" can be used as placeholders. These placeholders will
+                                    be replaced by timestamps of execution interval (formatted as ISO8601, e.g. '20111216T145509+0100').
+                                    -->
+                                    <!--<remoteResources>-->
+                                    <!--<property>-->
+                                    <!--<name>http://yourhost/path?from=_FROM_&amp;to=_TO_</name>-->
+                                    <!--<value>my_resource.txt</value>-->
+                                    <!--</property>-->
+                                    <!--</remoteResources>-->
 
-            <!-- general configuration for all executions -->
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
 
-            <configuration>
-              <!-- configure which testplans to use -->
-              <testFilesIncluded>
-                <testFilesIncluded>test.jmx</testFilesIncluded>
-              </testFilesIncluded>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 
-              <!-- protocol, server and port of tested webapp -->
-              <propertiesUser>
-                <protocol>${webapp.protocol}</protocol>
-                <server>${webapp.host}</server>
-                <port>${webapp.port}</port>
-              </propertiesUser>
-              <ignoreResultFailures>true</ignoreResultFailures>
-            </configuration>
-          </plugin>
-
-          <plugin>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>jmeter-analysis-maven-plugin</artifactId>
-            <version>${jmeter.analysis.maven.plugin.version}</version>
-            <executions>
-              <execution>
-                <goals>
-                  <goal>analyze</goal>
-                </goals>
-                <phase>post-integration-test</phase>
-                <configuration>
-                  <!--
-                  source file that contains jmeter result data. Needs to be XML format or a GZIPed XML format
-                  -->
-                  <source>${project.build.directory}/jmeter/results/*</source>
-
-                  <!--
-                  directory where to store analysis report files. At least a file "summary.txt" will be stored here.
-                  -->
-                  <targetDirectory>${project.build.directory}/reports</targetDirectory>
-
-                  <!--
-                  Defines groups of requests by URL patterns,
-                  e.g. URIs starting with /mock/page are associated with group "pages". All analysis results are
-                  If there is no such mapping then the threadgroups from the jmeter.xml are used.
-                  -->
-                  <!--<requestGroups>-->
-                    <!--<test>/en-US/firefox/**</test>-->
-                  <!--</requestGroups>-->
-
-                  <!--
-                  Mapping from resource URL to file name. Every resource will be downloaded and stored in 'targetDirectory'
-                  with the given filename. Tokens "_FROM_" and "_TO_" can be used as placeholders. These placeholders will
-                  be replaced by timestamps of execution interval (formatted as ISO8601, e.g. '20111216T145509+0100').
-                  -->
-                  <!--<remoteResources>-->
-                    <!--<property>-->
-                      <!--<name>http://yourhost/path?from=_FROM_&amp;to=_TO_</name>-->
-                      <!--<value>my_resource.txt</value>-->
-                    <!--</property>-->
-                  <!--</remoteResources>-->
-
-                </configuration>
-              </execution>
-            </executions>
-          </plugin>
-
-        </plugins>
-      </build>
-    </profile>
-  </profiles>
-
-  <!-- in case we want to use a SNAPSHOT version of the jmeter-maven-plugin -->
-  <pluginRepositories>
-    <pluginRepository>
-      <id>sonatype-snapshots</id>
-      <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
-    </pluginRepository>
-  </pluginRepositories>
+    <!-- in case we want to use a SNAPSHOT version of the jmeter-maven-plugin -->
+    <pluginRepositories>
+        <pluginRepository>
+            <id>sonatype-snapshots</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+        </pluginRepository>
+    </pluginRepositories>
 
 </project>

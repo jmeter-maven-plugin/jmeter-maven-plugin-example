@@ -1,52 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-
-  Multi purpose JMeter testplan which can be configured by passing properties to JMeter
-
-  The test contains four threadgroups that can be used (threadgroup00 - threadgroup03).
-  (for additional threadgroups, copy a whole section and modify number accordingly)
-  If no properties are set for a threadgroup, it will not be started/used.
-
-  Only GET requests are supported.
-
-====
-
-  Global properties
-  * protocol                            = protocol the server uses (http|https)
-  * server                              = hostname of the server to run the test against
-  * port                                = port of the server
-
-====
-
-  Threadgroup specific properties
-  * threadgroupXX.name                  = name of the threadgroup, logged to jmeter result file
-  * threadgroupXX.numberOfThreads       = number of threads to use
-  * threadgroupXX.scheduledDelay        = delay start of the threadgroup in seconds
-  * threadgroupXX.scheduledDuration     = duration of the test in seconds
-  * threadgroupXX.rampUp                = how long till all threads are up and running in seconds
-  * threadgroupXX.throughput            = target throughput of all threads of the group per minute
-  * threadgroupXX.dataFile              = use uris from given file
-
--->
-
-<jmeterTestPlan version="1.2" properties="2.2">
+<jmeterTestPlan version="1.2" properties="2.9" jmeter="3.0 r1743807">
   <hashTree>
-    <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="Testplan" enabled="true">
-      <stringProp name="TestPlan.comments">This is the main test plan</stringProp>
+    <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="Test Plan" enabled="true">
+      <stringProp name="TestPlan.comments"></stringProp>
       <boolProp name="TestPlan.functional_mode">false</boolProp>
       <boolProp name="TestPlan.serialize_threadgroups">false</boolProp>
-      <elementProp name="TestPlan.user_defined_variables" elementType="Arguments" guiclass="ArgumentsPanel"
-             testclass="Arguments" testname="User defined variables" enabled="true">
+      <elementProp name="TestPlan.user_defined_variables" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
         <collectionProp name="Arguments.arguments"/>
       </elementProp>
       <stringProp name="TestPlan.user_define_classpath"></stringProp>
     </TestPlan>
-
-    <!--
-      global properties
-    -->
     <hashTree>
-      <Arguments guiclass="ArgumentsPanel" testclass="Arguments" testname="Variables" enabled="true">
+      <Arguments guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
         <collectionProp name="Arguments.arguments">
           <elementProp name="protocol" elementType="Argument">
             <stringProp name="Argument.name">protocol</stringProp>
@@ -64,21 +29,11 @@
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
         </collectionProp>
-        <stringProp name="TestPlan.comments"></stringProp>
       </Arguments>
       <hashTree/>
-
-      <!--
-        threadgroup00
-        properties and configuration
-      -->
-
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="${__P(threadgroup00.name,none)}"
-             enabled="true">
-        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel"
-               testclass="LoopController" testname="Loop Controller" enabled="true">
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="${__P(threadgroup00.name,none)}" enabled="true">
+        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
-          <!-- use numberOfLoops with scheduledDuration set to a high value if you want the test to end after a fixed amout of loops. -1 is disabled -->
           <stringProp name="LoopController.loops">${__P(threadgroup00.numberOfLoops,-1)}</stringProp>
         </elementProp>
         <stringProp name="ThreadGroup.num_threads">${__P(threadgroup00.numberOfThreads,0)}</stringProp>
@@ -91,36 +46,30 @@
         <stringProp name="ThreadGroup.delay">${__P(threadgroup00.scheduledDelay,0)}</stringProp>
       </ThreadGroup>
       <hashTree>
-        <!-- dataFile is passed to a CSVDataSet. The delimiter is configured as ";", but a line break also works and makes the dataFile easier to read. -->
         <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="RequestPath" enabled="true">
           <stringProp name="delimiter">;</stringProp>
           <stringProp name="fileEncoding"></stringProp>
           <stringProp name="filename">${__P(threadgroup00.dataFile)}</stringProp>
           <boolProp name="quotedData">false</boolProp>
           <boolProp name="recycle">true</boolProp>
-          <stringProp name="shareMode">All threads</stringProp>
+          <stringProp name="shareMode">shareMode.all</stringProp>
           <boolProp name="stopThread">false</boolProp>
           <stringProp name="variableNames">requestPath</stringProp>
         </CSVDataSet>
         <hashTree/>
-        <ConstantThroughputTimer guiclass="TestBeanGUI" testclass="ConstantThroughputTimer"
-                     testname="Throughput" enabled="true">
-          <stringProp name="calcMode">all active threads in current thread group</stringProp>
+        <ConstantThroughputTimer guiclass="TestBeanGUI" testclass="ConstantThroughputTimer" testname="Throughput" enabled="true">
+          <intProp name="calcMode">2</intProp>
           <stringProp name="throughput">${__P(threadgroup00.throughput)}</stringProp>
           <stringProp name="TestPlan.comments">per ThreadGroup</stringProp>
         </ConstantThroughputTimer>
         <hashTree/>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="${requestPath}"
-               enabled="true">
-          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel"
-                 testclass="Arguments" testname="User defined variables" enabled="true">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="${requestPath}" enabled="true">
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User defined variables" enabled="true">
             <collectionProp name="Arguments.arguments"/>
           </elementProp>
           <stringProp name="HTTPSampler.domain">${server}</stringProp>
           <stringProp name="HTTPSampler.port">${port}</stringProp>
-          <!-- default: 10 seconds -->
           <stringProp name="HTTPSampler.connect_timeout"></stringProp>
-          <!-- default: 10 seconds -->
           <stringProp name="HTTPSampler.response_timeout"></stringProp>
           <stringProp name="HTTPSampler.protocol">${protocol}</stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
@@ -131,24 +80,14 @@
           <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
           <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
           <stringProp name="HTTPSampler.implementation">HttpClient4</stringProp>
-          <!-- do not download embedded resources -->
-          <boolProp name="HTTPSampler.image_parser">false</boolProp>
           <boolProp name="HTTPSampler.monitor">false</boolProp>
           <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
         </HTTPSamplerProxy>
+        <hashTree/>
       </hashTree>
-
-      <!--
-        threadgroup01
-        properties and configuration
-      -->
-
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="${__P(threadgroup01.name,none)}"
-             enabled="true">
-        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel"
-               testclass="LoopController" testname="Loop Controller" enabled="true">
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="${__P(threadgroup01.name,none)}" enabled="true">
+        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
-          <!-- use numberOfLoops with scheduledDuration set to a high value if you want the test to end after a fixed amout of loops. -1 is disabled -->
           <stringProp name="LoopController.loops">${__P(threadgroup01.numberOfLoops,-1)}</stringProp>
         </elementProp>
         <stringProp name="ThreadGroup.num_threads">${__P(threadgroup01.numberOfThreads,0)}</stringProp>
@@ -161,36 +100,30 @@
         <stringProp name="ThreadGroup.delay">${__P(threadgroup01.scheduledDelay,0)}</stringProp>
       </ThreadGroup>
       <hashTree>
-        <!-- dataFile is passed to a CSVDataSet. The delimiter is configured as ";", but a line break also works and makes the dataFile easier to read. -->
         <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="RequestPath" enabled="true">
           <stringProp name="delimiter">;</stringProp>
           <stringProp name="fileEncoding"></stringProp>
           <stringProp name="filename">${__P(threadgroup01.dataFile)}</stringProp>
           <boolProp name="quotedData">false</boolProp>
           <boolProp name="recycle">true</boolProp>
-          <stringProp name="shareMode">All threads</stringProp>
+          <stringProp name="shareMode">shareMode.all</stringProp>
           <boolProp name="stopThread">false</boolProp>
           <stringProp name="variableNames">requestPath</stringProp>
         </CSVDataSet>
         <hashTree/>
-        <ConstantThroughputTimer guiclass="TestBeanGUI" testclass="ConstantThroughputTimer"
-                     testname="Throughput" enabled="true">
-          <stringProp name="calcMode">all active threads in current thread group</stringProp>
+        <ConstantThroughputTimer guiclass="TestBeanGUI" testclass="ConstantThroughputTimer" testname="Throughput" enabled="true">
+          <intProp name="calcMode">2</intProp>
           <stringProp name="throughput">${__P(threadgroup01.throughput)}</stringProp>
           <stringProp name="TestPlan.comments">per ThreadGroup</stringProp>
         </ConstantThroughputTimer>
         <hashTree/>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="${requestPath}"
-               enabled="true">
-          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel"
-                 testclass="Arguments" testname="User defined variables" enabled="true">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="${requestPath}" enabled="true">
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User defined variables" enabled="true">
             <collectionProp name="Arguments.arguments"/>
           </elementProp>
           <stringProp name="HTTPSampler.domain">${server}</stringProp>
           <stringProp name="HTTPSampler.port">${port}</stringProp>
-          <!-- default: 10 seconds -->
           <stringProp name="HTTPSampler.connect_timeout"></stringProp>
-          <!-- default: 10 seconds -->
           <stringProp name="HTTPSampler.response_timeout"></stringProp>
           <stringProp name="HTTPSampler.protocol">${protocol}</stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
@@ -201,24 +134,14 @@
           <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
           <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
           <stringProp name="HTTPSampler.implementation">HttpClient4</stringProp>
-          <!-- do not download embedded resources -->
-          <boolProp name="HTTPSampler.image_parser">false</boolProp>
           <boolProp name="HTTPSampler.monitor">false</boolProp>
           <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
         </HTTPSamplerProxy>
+        <hashTree/>
       </hashTree>
-
-      <!--
-        threadgroup02
-        properties and configuration
-      -->
-
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="${__P(threadgroup02.name,none)}"
-             enabled="true">
-        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel"
-               testclass="LoopController" testname="Loop Controller" enabled="true">
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="${__P(threadgroup02.name,none)}" enabled="true">
+        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
-          <!-- use numberOfLoops with scheduledDuration set to a high value if you want the test to end after a fixed amout of loops. -1 is disabled -->
           <stringProp name="LoopController.loops">${__P(threadgroup02.numberOfLoops,-1)}</stringProp>
         </elementProp>
         <stringProp name="ThreadGroup.num_threads">${__P(threadgroup02.numberOfThreads,0)}</stringProp>
@@ -231,36 +154,30 @@
         <stringProp name="ThreadGroup.delay">${__P(threadgroup02.scheduledDelay,0)}</stringProp>
       </ThreadGroup>
       <hashTree>
-        <!-- dataFile is passed to a CSVDataSet. The delimiter is configured as ";", but a line break also works and makes the dataFile easier to read. -->
         <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="RequestPath" enabled="true">
           <stringProp name="delimiter">;</stringProp>
           <stringProp name="fileEncoding"></stringProp>
           <stringProp name="filename">${__P(threadgroup02.dataFile)}</stringProp>
           <boolProp name="quotedData">false</boolProp>
           <boolProp name="recycle">true</boolProp>
-          <stringProp name="shareMode">All threads</stringProp>
+          <stringProp name="shareMode">shareMode.all</stringProp>
           <boolProp name="stopThread">false</boolProp>
           <stringProp name="variableNames">requestPath</stringProp>
         </CSVDataSet>
         <hashTree/>
-        <ConstantThroughputTimer guiclass="TestBeanGUI" testclass="ConstantThroughputTimer"
-                     testname="Throughput" enabled="true">
-          <stringProp name="calcMode">all active threads in current thread group</stringProp>
+        <ConstantThroughputTimer guiclass="TestBeanGUI" testclass="ConstantThroughputTimer" testname="Throughput" enabled="true">
+          <intProp name="calcMode">2</intProp>
           <stringProp name="throughput">${__P(threadgroup02.throughput)}</stringProp>
           <stringProp name="TestPlan.comments">per ThreadGroup</stringProp>
         </ConstantThroughputTimer>
         <hashTree/>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="${requestPath}"
-               enabled="true">
-          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel"
-                 testclass="Arguments" testname="User defined variables" enabled="true">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="${requestPath}" enabled="true">
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User defined variables" enabled="true">
             <collectionProp name="Arguments.arguments"/>
           </elementProp>
           <stringProp name="HTTPSampler.domain">${server}</stringProp>
           <stringProp name="HTTPSampler.port">${port}</stringProp>
-          <!-- default: 10 seconds -->
           <stringProp name="HTTPSampler.connect_timeout"></stringProp>
-          <!-- default: 10 seconds -->
           <stringProp name="HTTPSampler.response_timeout"></stringProp>
           <stringProp name="HTTPSampler.protocol">${protocol}</stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
@@ -271,24 +188,14 @@
           <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
           <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
           <stringProp name="HTTPSampler.implementation">HttpClient4</stringProp>
-          <!-- do not download embedded resources -->
-          <boolProp name="HTTPSampler.image_parser">false</boolProp>
           <boolProp name="HTTPSampler.monitor">false</boolProp>
           <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
         </HTTPSamplerProxy>
+        <hashTree/>
       </hashTree>
-
-      <!--
-        threadgroup03
-        properties and configuration
-      -->
-
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="${__P(threadgroup03.name,none)}"
-             enabled="true">
-        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel"
-               testclass="LoopController" testname="Loop Controller" enabled="true">
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="${__P(threadgroup03.name,none)}" enabled="true">
+        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
-          <!-- use numberOfLoops with scheduledDuration set to a high value if you want the test to end after a fixed amout of loops. -1 is disabled -->
           <stringProp name="LoopController.loops">${__P(threadgroup03.numberOfLoops,-1)}</stringProp>
         </elementProp>
         <stringProp name="ThreadGroup.num_threads">${__P(threadgroup03.numberOfThreads,0)}</stringProp>
@@ -301,36 +208,30 @@
         <stringProp name="ThreadGroup.delay">${__P(threadgroup03.scheduledDelay,0)}</stringProp>
       </ThreadGroup>
       <hashTree>
-        <!-- dataFile is passed to a CSVDataSet. The delimiter is configured as ";", but a line break also works and makes the dataFile easier to read. -->
         <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="RequestPath" enabled="true">
           <stringProp name="delimiter">;</stringProp>
           <stringProp name="fileEncoding"></stringProp>
           <stringProp name="filename">${__P(threadgroup03.dataFile)}</stringProp>
           <boolProp name="quotedData">false</boolProp>
           <boolProp name="recycle">true</boolProp>
-          <stringProp name="shareMode">All threads</stringProp>
+          <stringProp name="shareMode">shareMode.all</stringProp>
           <boolProp name="stopThread">false</boolProp>
           <stringProp name="variableNames">requestPath</stringProp>
         </CSVDataSet>
         <hashTree/>
-        <ConstantThroughputTimer guiclass="TestBeanGUI" testclass="ConstantThroughputTimer"
-                     testname="Throughput" enabled="true">
-          <stringProp name="calcMode">all active threads in current thread group</stringProp>
+        <ConstantThroughputTimer guiclass="TestBeanGUI" testclass="ConstantThroughputTimer" testname="Throughput" enabled="true">
+          <intProp name="calcMode">2</intProp>
           <stringProp name="throughput">${__P(threadgroup03.throughput)}</stringProp>
           <stringProp name="TestPlan.comments">per ThreadGroup</stringProp>
         </ConstantThroughputTimer>
         <hashTree/>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="${requestPath}"
-               enabled="true">
-          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel"
-                 testclass="Arguments" testname="User defined variables" enabled="true">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="${requestPath}" enabled="true">
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User defined variables" enabled="true">
             <collectionProp name="Arguments.arguments"/>
           </elementProp>
           <stringProp name="HTTPSampler.domain">${server}</stringProp>
           <stringProp name="HTTPSampler.port">${port}</stringProp>
-          <!-- default: 10 seconds -->
           <stringProp name="HTTPSampler.connect_timeout"></stringProp>
-          <!-- default: 10 seconds -->
           <stringProp name="HTTPSampler.response_timeout"></stringProp>
           <stringProp name="HTTPSampler.protocol">${protocol}</stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
@@ -341,14 +242,11 @@
           <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
           <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
           <stringProp name="HTTPSampler.implementation">HttpClient4</stringProp>
-          <!-- do not download embedded resources -->
-          <boolProp name="HTTPSampler.image_parser">false</boolProp>
           <boolProp name="HTTPSampler.monitor">false</boolProp>
           <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
         </HTTPSamplerProxy>
+        <hashTree/>
       </hashTree>
-
-
     </hashTree>
   </hashTree>
 </jmeterTestPlan>
