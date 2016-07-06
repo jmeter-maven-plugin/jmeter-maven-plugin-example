@@ -22,7 +22,7 @@
         <webapp.port>80</webapp.port>
         <webapp.uris>${project.basedir}/src/test/uris/uris.txt</webapp.uris>
         <jmeter.analysis.maven.plugin.version>1.0.6</jmeter.analysis.maven.plugin.version>
-        <jmeter-maven-plugin.version>2.0.2</jmeter-maven-plugin.version>
+        <jmeter-maven-plugin.version>2.0.3</jmeter-maven-plugin.version>
         <test.duration>30</test.duration>
         <test.threads>10</test.threads>
     </properties>
